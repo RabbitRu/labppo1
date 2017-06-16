@@ -87,6 +87,16 @@ namespace labppo1.InnerStruct
             students.Add(new StudentInfo(surname, firstname, middlename, rating, avatar));
         }
 
+        public void DeleteStudent(int index)
+        {
+            students.RemoveAt(index);
+        }
+
+        public void Clear()
+        {
+            students.Clear();
+        }
+
         public GroupInfo(string gname)
         {
             students = new List<StudentInfo>();

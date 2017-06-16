@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace labppo1.Command
 {
-    interface ICommand<T>
+    class EditStudentCommand
     {
-        T Do(T action);
-        T Undo(T action);
     }
 }

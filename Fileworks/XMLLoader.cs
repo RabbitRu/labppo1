@@ -14,12 +14,12 @@ namespace labppo1.Fileworks
         {
             XmlDocument file = new XmlDocument();
             file.Load(filename);
-
+          
             DataTree dt = new DataTree();
 
             foreach(XmlNode group in file.DocumentElement)
             {
-                dt.AddGroup(group.Attributes[0].Value);
+                dt.AddGroup(new GroupInfo(group.Attributes[0].Value));
 
                 XmlNode students = group.FirstChild;
                 foreach (XmlNode student in students.ChildNodes)

@@ -10,11 +10,36 @@ namespace labppo1.InnerStruct
     {
         private List<GroupInfo> groups;
 
-        public void AddGroup(string groupname)
+        public void AddGroup(GroupInfo group)
         {
-            groups.Add(new GroupInfo(groupname));
+            groups.Add(group);
         }
 
+        public void AddGroup(GroupInfo group, int index)
+        {
+            groups.Insert(index, group);
+        }
+
+        public void DeleteGroup(int index)
+        {
+            groups[index].Clear();
+            groups.RemoveAt(index);
+        }
+
+        public void AddStudent(StudentInfo student, int group)
+        {
+            groups[group].addStudent(student);
+        }
+
+        public void AddStudent(StudentInfo student, int group, int index)
+        {
+            groups[group].addStudent(student,index);
+        }
+
+        public void DeleteStudent(int gindex, int sindex)
+        {
+            groups[gindex].DeleteStudent(sindex);
+        }
 
         public GroupInfo this[int index]
         {
