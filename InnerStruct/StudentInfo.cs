@@ -41,7 +41,7 @@ namespace labppo1.InnerStruct
                 if (value <= 100 && value >= 0)
                     rating = value;
                 else
-                    throw new ArgumentOutOfRangeException();
+                    rating = 0;//throw new ArgumentOutOfRangeException();
                 }
         }
 

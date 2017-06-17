@@ -12,8 +12,9 @@ namespace labppo1.Command
         private int gindex, sindex;
         private StudentInfo newstudent, oldstudent;
 
-        public EditStudentCommand(int gind, int sind)
+        public EditStudentCommand(StudentInfo st, int gind, int sind)
         {
+            newstudent = st;
             gindex = gind;
             sindex = sind;
         }

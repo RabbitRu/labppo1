@@ -36,7 +36,7 @@ namespace labppo1.InnerStruct
         {
             get
             {
-                int min = 0;
+                int min = 100;
                 foreach (StudentInfo student in students)
                     if (student.Rating < min)
                         min = student.Rating;

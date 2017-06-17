@@ -29,6 +29,18 @@ namespace labppo1.Command
             }
             return input;
         }
+
+        public T Redo(T input)
+        {
+            if(sRedo.Count > 0)
+            {
+                ICommand<T> action = sRedo.Pop();
+                T result = action.Do(input);
+                sUndo.Push(action);
+                return result;
+            }
+            return input;
+        }
         
         public Reciever()
         {
