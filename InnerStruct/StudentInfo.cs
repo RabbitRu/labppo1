@@ -53,5 +53,14 @@ namespace labppo1.InnerStruct
             Rating = rating;
             Avatar = avatar;
         }
+
+        public StudentInfo(StudentInfo sinfo)
+        {
+            Surname = sinfo.Firstname;
+            Firstname = sinfo.Firstname;
+            Middlename = sinfo.Middlename;
+            Rating = sinfo.Rating;
+            Avatar = sinfo.Avatar;
+        }
     }
 }

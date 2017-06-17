@@ -7,26 +7,26 @@ using System.Threading.Tasks;
 
 namespace labppo1.Command
 {
-    class AddStudentCommand : ICommand<DataTree>
+    class DeleteStudentCommand : ICommand<DataTree>
     {
         private int gindex, sindex;
         private StudentInfo student;
 
-        public AddStudentCommand(StudentInfo stdnt, int gind, int sind)
+        public DeleteStudentCommand(int gind, int sind)
         {
-            student = stdnt;
             gindex = gind;
             sindex = sind;
         }
 
-        public DataTree Do(DataTree dt)
+        public DataTree Undo(DataTree dt)
         {
             dt.AddStudent(student, gindex, sindex);
             return dt;
         }
 
-        public DataTree Undo(DataTree dt)
+        public DataTree Do(DataTree dt)
         {
+            student = new StudentInfo(dt[gindex][sindex]);
             dt.DeleteStudent(gindex, sindex);
             return dt;
         }

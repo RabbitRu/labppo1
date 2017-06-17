@@ -102,5 +102,11 @@ namespace labppo1.InnerStruct
             students = new List<StudentInfo>();
             Groupname = gname;
         }
+
+        public GroupInfo(GroupInfo grp)
+        {
+            Groupname = grp.Groupname;
+            students = new List<StudentInfo>(grp.students);
+        }
     }
 }
