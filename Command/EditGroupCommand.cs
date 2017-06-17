@@ -21,6 +21,8 @@ namespace labppo1.Command
         public DataTree Do(DataTree dt)
         {
             oldgroup = dt[index];
+            for (int i = 0; i < oldgroup.Count; i++)
+                newgroup.addStudent(oldgroup[i]);
             dt.DeleteGroup(index);
             dt.AddGroup(newgroup, index);
             return dt;

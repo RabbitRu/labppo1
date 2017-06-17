@@ -19,6 +19,7 @@ namespace labppo1
         private ILoader xmlworker;
         private Reciever<DataTree> rcv;
         private int grpchng;
+        private ContextMenuStrip gcms, scms, tcms;
 
         public Form1()
         {
@@ -28,8 +29,82 @@ namespace labppo1
             xmlworker = new XMLLoader();
             grpchng = -1;
 
-            this.treeView1.AfterSelect += (s, arg) => treeView1_AfterSelect();
+            treeView1.NodeMouseClick += (o, e) =>
+            {
+                if (e.Button == MouseButtons.Right)
+                {
+                    treeView1.SelectedNode = e.Node;
+                }
+            };
 
+                gcms = new ContextMenuStrip();
+            scms = new ContextMenuStrip();
+            tcms = new ContextMenuStrip();
+            ToolStripMenuItem addStudent = new ToolStripMenuItem();
+            addStudent.Text = "Add Student";
+            addStudent.Click += addStudent_Click;
+            ToolStripMenuItem delGroup = new ToolStripMenuItem();
+            delGroup.Text = "Delete Group";
+            delGroup.Click += delGroup_Click;
+            ToolStripMenuItem renameGroup = new ToolStripMenuItem();
+            renameGroup.Text = "Rename Group";
+            renameGroup.Click += renameGroup_Click;
+            ToolStripMenuItem delStudent = new ToolStripMenuItem();
+            delStudent.Text = "Delete Student";
+            delStudent.Click += delStudent_Click;
+            ToolStripMenuItem addGroup = new ToolStripMenuItem();
+            addGroup.Text = "Add Group";
+            addGroup.Click += addGroup_Click;
+
+            
+            tcms.Items.Add(addGroup);
+            scms.Items.Add(delStudent);
+            gcms.Items.AddRange(new ToolStripMenuItem[]{addStudent, delGroup, renameGroup});
+
+            treeView1.ContextMenuStrip = tcms;
+            
+            //this.Controls.Add(treeView1);
+
+
+            this.treeView1.AfterSelect += (s, arg) => treeView1_AfterSelect();
+        }
+
+        private void addGroup_Click(object sender, EventArgs e)
+        {
+            int gind = dt.Count;
+            grpchng = dt.Count;
+            GroupInfo gr = new GroupInfo(textBox5.Text);
+            dt = rcv.Do(new AddGroupCommand(gr, gind), dt);
+            UpdateTree();
+        }
+
+        private void delStudent_Click(object sender, EventArgs e)
+        {
+            int gind = treeView1.SelectedNode.Parent.Index;
+            int sind = treeView1.SelectedNode.Index;
+            dt = rcv.Do(new DeleteStudentCommand(gind, sind), dt);
+            UpdateTree();
+        }
+
+        private void addStudent_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void delGroup_Click(object sender, EventArgs e)
+        {
+            int gind = treeView1.SelectedNode.Index;
+            dt = rcv.Do(new DeleteGroupCommand(gind), dt);
+            grpchng = gind;
+            UpdateTree();
+        }
+
+        private void renameGroup_Click(object sender, EventArgs e)
+        {
+            int gind = treeView1.SelectedNode.Index;
+            GroupInfo gr = new GroupInfo(Microsoft.VisualBasic.Interaction.InputBox("Title", "Prompt", "Default", 0, 0));
+            dt = rcv.Do(new EditGroupCommand(gr, gind), dt);
+            UpdateTree();
 
         }
 
@@ -258,9 +333,12 @@ namespace labppo1
             for (int i = 0; i < dt.Count; i++)
             {
                 treeView1.Nodes.Add(new TreeNode(dt[i].Groupname));
+
+                treeView1.Nodes[i].ContextMenuStrip = gcms;
                 for (int j = 0; j < dt[i].Count; j++)
                 {
                     treeView1.Nodes[i].Nodes.Add(new TreeNode(dt[i][j].Surname + " " + dt[i][j].Firstname + " " + dt[i][j].Middlename));
+                    treeView1.Nodes[i].Nodes[j].ContextMenuStrip = scms;
                 }
                 if(saveExpand && oldn[i])
                     treeView1.Nodes[i].Expand();
